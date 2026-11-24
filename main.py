@@ -14,6 +14,10 @@ ENTRY = (
 
 
 def main() -> None:
+    # Guard the bounty gate (1-200 chars) so a future text tweak can never
+    # silently ship an invalid entry.
+    if not 1 <= len(ENTRY) <= 200:
+        raise ValueError(f"entry must be 1-200 chars, got {len(ENTRY)}")
     os.makedirs("/output", exist_ok=True)
     with open("/output/entry.txt", "w", encoding="utf-8") as f:
         f.write(ENTRY)
